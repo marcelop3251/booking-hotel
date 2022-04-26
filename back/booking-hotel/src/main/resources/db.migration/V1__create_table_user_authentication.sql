@@ -8,7 +8,7 @@ create table customer(
    id serial PRIMARY KEY,
    name VARCHAR(50) NOT NULL,
    credential_id SMALLINT references credential(id)
-)
+);
 
 create table organization(
     id serial PRIMARY KEY,
@@ -36,4 +36,4 @@ create table Room(
     quantity SMALLINT NOT NULL,
     description VARCHAR NOT NULL,
     hotel_id SMALLINT references hotel(id)
-)
+);
