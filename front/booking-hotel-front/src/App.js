@@ -1,5 +1,4 @@
 
-import React from "react";
 import {
   BrowserRouter,
   Routes,
@@ -9,7 +8,7 @@ import { DetailsHotel } from "./view/DetailsHotel";
 import { Home } from "./view/Home";
 import { Login } from "./view/Login";
 
-function App(props) {
+function App() {
   return (
       <div>
         <BrowserRouter>

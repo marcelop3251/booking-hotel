@@ -2,6 +2,7 @@ package com.tcc.bookinghotel.application.beans
 
 import com.tcc.bookinghotel.domain.repository.HotelRepository
 import com.tcc.bookinghotel.domain.repository.RoomRepository
+import com.tcc.bookinghotel.domain.usecase.FindAllHotel
 import com.tcc.bookinghotel.domain.usecase.RegisterNewHotel
 import com.tcc.bookinghotel.domain.usecase.RegisterNewRoom
 import org.springframework.context.annotation.Bean
@@ -15,4 +16,7 @@ class BeansDomains {
 
     @Bean
     fun registerNewRoom(roomRepository: RoomRepository, hotelRepository: HotelRepository) = RegisterNewRoom(roomRepository, hotelRepository)
+
+    @Bean
+    fun registerFindAllHotel(hotelRepository: HotelRepository) = FindAllHotel(hotelRepository)
 }

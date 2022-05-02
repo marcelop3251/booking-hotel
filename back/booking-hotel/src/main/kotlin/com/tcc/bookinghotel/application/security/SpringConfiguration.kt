@@ -20,6 +20,7 @@ import org.springframework.security.web.server.authentication.ServerAuthenticati
 import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler
 import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers
+import org.springframework.web.cors.reactive.CorsWebFilter
 
 @Configuration
 @EnableWebFluxSecurity
@@ -28,14 +29,24 @@ class SpringConfiguration(
 ) {
 
     @Bean
-    fun springSecurityFilterChain(http: ServerHttpSecurity, jwtAuthenticationFilter: AuthenticationWebFilter, authorizationFilter: JWTAuthorizationFilter): SecurityWebFilterChain {
+    fun springSecurityFilterChain(
+        http: ServerHttpSecurity,
+        jwtAuthenticationFilter: AuthenticationWebFilter,
+        authorizationFilter: JWTAuthorizationFilter,
+        corsWebFilter: CorsWebFilter
+    ): SecurityWebFilterChain {
         http.csrf().disable()
             .authorizeExchange()
             .pathMatchers(HttpMethod.POST,"/login").permitAll()
-            .pathMatchers(HttpMethod.POST, "/register/customer").permitAll()
-            .pathMatchers(HttpMethod.POST, "/register/company").permitAll()
+            .pathMatchers(HttpMethod.POST, "/customer").permitAll()
+            .pathMatchers(HttpMethod.POST, "/company").permitAll()
+            .pathMatchers(HttpMethod.GET, "/hotel").permitAll()
             .anyExchange().authenticated()
             .and()
+            .cors {
+                it.disable()
+            }
+            .addFilterBefore(corsWebFilter, SecurityWebFiltersOrder.CORS)
             .addFilterBefore(jwtAuthenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION)
             .addFilterBefore(authorizationFilter, SecurityWebFiltersOrder.AUTHORIZATION)
             .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())

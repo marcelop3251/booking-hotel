@@ -10,9 +10,9 @@ import reactor.core.publisher.Mono
 @Service
 class UserService(
     val repository: CredentialRepositorySpring
-) : ReactiveUserDetailsService {
+) : ReactiveUserDetailsService  {
 
-    override fun findByUsername(username: String?): Mono<UserDetails>  = mono {
+    override fun findByUsername(username: String): Mono<UserDetails>  = mono {
         UserDetailsService(repository.findByEmail(username))
     }
 }

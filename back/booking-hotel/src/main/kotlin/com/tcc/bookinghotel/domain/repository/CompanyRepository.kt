@@ -4,6 +4,6 @@ import com.tcc.bookinghotel.domain.entity.Company
 
 interface CompanyRepository {
 
-    suspend fun findByEmail(username: String): Company?
+    suspend fun existsByEmail(username: String): Boolean
     suspend fun create(company: Company): Company
 }

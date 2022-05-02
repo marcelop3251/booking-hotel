@@ -1,6 +1,6 @@
 import { MainMenu } from "../components/MainMenu"
 
-export const DetailsHotel = () => {
+export const DetailsHotel = (props) => {
     return (
         <div>
             <MainMenu />

@@ -12,7 +12,7 @@ data class CredentialEntity(
     val email: String,
     val password: String,
 ) {
-    constructor(user: User, bCrypt: PasswordEncoder) : this (
+    constructor(user: User, bCrypt: PasswordEncoder ) : this (
         email = user.email,
         password = bCrypt.encode(user.password)
     )

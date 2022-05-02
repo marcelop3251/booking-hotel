@@ -1,6 +1,5 @@
 package com.tcc.bookinghotel.domain.usecase
 
-import com.newrelic.api.agent.Trace
 import com.tcc.bookinghotel.domain.entity.Company
 import com.tcc.bookinghotel.domain.exception.CompanyRegistryException
 import com.tcc.bookinghotel.domain.exception.TypeException
@@ -14,10 +13,8 @@ class RegisterNewCompany(
     private val companyRepository: CompanyRepository
 ) {
 
-    @Trace(async = true)
     suspend fun execute(company: Company): Company {
-        val result = companyRepository.findByEmail(company.email)
-        if (result != null) {
+        if (companyRepository.existsByEmail(company.email)) {
             throw CompanyRegistryException(TypeException.COMPANY_REGISTRATION, COMPANY_REGISTRTATION_MESSAGE)
         }
         return companyRepository.create(company)

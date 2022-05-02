@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails
 
 class UserDetailsService(
     private val credential: CredentialEntity?
-) : UserDetails {
+) : UserDetails  {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return mutableListOf();

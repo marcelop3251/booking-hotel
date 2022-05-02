@@ -20,14 +20,8 @@ class CompanyRepositoryImpl(
     val bCrypt: PasswordEncoder,
 ) : CompanyRepository {
 
-    override suspend fun findByEmail(email: String): Company? {
-        return credentialRepositorySpring.findByEmail(email)?.let { credential ->
-            companyRepositorySpring.findByCredentialId(credential.id!!)?.let { company ->
-                organizationRepositorySpring.findById(company.organizationId)?.let { organizationEntity ->
-                    company.toDomain(organizationEntity, credential.email, credential.password)
-                }
-            }
-        }
+    override suspend fun existsByEmail(email: String): Boolean {
+        return credentialRepositorySpring.existsByEmail(email)
     }
 
     @Transactional

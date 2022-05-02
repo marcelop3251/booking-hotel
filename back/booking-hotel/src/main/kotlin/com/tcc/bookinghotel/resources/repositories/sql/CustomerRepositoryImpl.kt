@@ -20,10 +20,8 @@ class CustomerRepositoryImpl(
 
     val logger = LoggerFactory.getLogger(javaClass)
 
-    override suspend fun findByEmail(username: String?) =
-        credentialRepositorySpring.findByEmail(username)?.let {
-            customerRepositorySpring.findByCredentialId(it.id!!)?.toDomain(it.email, it.password)
-        }
+    override suspend fun existsByEmail(username: String) =
+        credentialRepositorySpring.existsByEmail(username)
 
     @Transactional
     override suspend fun create(customer: Customer) =

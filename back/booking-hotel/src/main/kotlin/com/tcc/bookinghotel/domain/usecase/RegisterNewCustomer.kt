@@ -8,13 +8,11 @@ import org.springframework.stereotype.Component
 
 @Component
 class RegisterNewCustomer(
-    private val customerRepository: CustomerRepository
+    private val customerRepository: CustomerRepository,
 ) {
-
     suspend fun execute(customer: Customer): Customer {
-        val result = customerRepository.findByEmail(customer.email)
-        if (result != null) {
-            throw CustomerRegistryException(TypeException.CUSTOMER_REGISTRATION,"CLIENT ALREADY REGISTRED")
+        if (customerRepository.existsByEmail(customer.email)) {
+            throw CustomerRegistryException(TypeException.CUSTOMER_REGISTRATION, "CLIENT ALREADY REGISTRED")
         }
         return customerRepository.create(customer)
     }
