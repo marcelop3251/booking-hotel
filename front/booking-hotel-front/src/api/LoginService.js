@@ -1,11 +1,9 @@
 import axios from "axios";
-const BASE_URL = 'http://localhost:8080/';
-const WITH_BASE_URL = path => `${BASE_URL}${path}`;
+import { WITH_BASE_URL } from "./Constants";
+
 
 export class LoginService { 
-    static doLogin() { 
-        console.log('url encontrada is ');
-        console.log(WITH_BASE_URL('login'));
+    static doLogin(credential) { 
 
         const config = { 
             headers: { 
@@ -14,16 +12,11 @@ export class LoginService {
             }
         }
        
-        return axios.post('http://localhost:8080/login',
+        return axios.post(WITH_BASE_URL('login'),
         { 
-            "username": "marcelop3251@gmail.com",
-            "password": "123456"
-        }, config).catch(error => {
-            console.log("Error retornado by acess")
-            console.log(error)
-        })
-        
-       // )
+            "username": credential.email,
+            "password": credential.password
+        }, config)
     }
 
 }

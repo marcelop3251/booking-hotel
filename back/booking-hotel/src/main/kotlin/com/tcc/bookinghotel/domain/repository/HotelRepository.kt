@@ -8,4 +8,5 @@ interface HotelRepository {
     suspend fun create(hotel: Hotel, companyId: Int): Hotel
     suspend fun findById(hotelId: Int): Hotel
     suspend fun findAll(): Flow<Hotel>
+    suspend fun findByRoomId(roomId: Int): Hotel?
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component
 class RegisterNewCustomer(
     private val customerRepository: CustomerRepository,
 ) {
+
     suspend fun execute(customer: Customer): Customer {
         if (customerRepository.existsByEmail(customer.email)) {
             throw CustomerRegistryException(TypeException.CUSTOMER_REGISTRATION, "CLIENT ALREADY REGISTRED")

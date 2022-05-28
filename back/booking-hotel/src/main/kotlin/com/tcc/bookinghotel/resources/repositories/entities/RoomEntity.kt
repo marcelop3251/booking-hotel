@@ -9,6 +9,7 @@ import org.springframework.data.relational.core.mapping.Table
 data class RoomEntity(
     @Id
     var id: Int?,
+    val type: String,
     val hotelId: Int,
     val rentValue: String,
     val quantity: Int,
@@ -16,6 +17,7 @@ data class RoomEntity(
 ) {
     constructor(room: Room, hotelId: Int): this(
         id = room.id,
+        type = room.type,
         hotelId = hotelId,
         rentValue = room.rentValue.toString(),
         quantity = room.quantity,
@@ -24,6 +26,7 @@ data class RoomEntity(
 
     fun toDomain(): Room = Room(
         id = id,
+        type = type,
         rentValue = BigDecimal(rentValue),
         quantity = quantity,
         description = description

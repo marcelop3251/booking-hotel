@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react"
-import { Button, Form, FormGroup } from "react-bootstrap"
-import { Input, Label } from "reactstrap"
-import { LoginService } from "../api/LoginService"
-import { Link, useNavigate } from "react-router-dom"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { RegisterService } from "../api/RegisterService";
 
-export const Login = () => {
+export const RegisterNewAccount = () => { 
 
     const credential = {};
     const navigate = useNavigate();
@@ -13,15 +11,10 @@ export const Login = () => {
 
     const submitForm = (e) => { 
         e.preventDefault();
-    
-        const data = LoginService.doLogin(credential).then(data => { 
-            
-            if (data.headers.authorization != null) { 
-                localStorage.setItem('token', data.headers.authorization);
-                return navigate('/home')
-            }
+        const data = RegisterService.doRegister(credential).then(data => { 
+            return navigate('/home')
         }).catch(error => { 
-            setDisabled(true)
+            console.log("Error when trying to register")
         });
     }
 
@@ -31,6 +24,10 @@ export const Login = () => {
 
     const setPassword = (e) => { 
         credential.password = e.target.value;
+    }
+
+    const setName = (e) => { 
+        credential.name = e.target.value;
     }
     
     return (
@@ -55,6 +52,21 @@ export const Login = () => {
                     <div class="mb-2 me-sm-2 mb-sm-0">
                         <label
                             class="me-sm-2"
+                            for="name">
+                            Nome
+                        </label>
+                        <input
+                            id="name"
+                            name="name"
+                            placeholder="Informe seu nome aqui!"
+                            type="text"
+                            class="form-control"
+                            onChange={(e) => setName(e)}
+                        />
+                    </div>
+                    <div class="mb-2 me-sm-2 mb-sm-0">
+                        <label
+                            class="me-sm-2"
                             for="examplePassword"
                         >
                             Senha
@@ -68,22 +80,12 @@ export const Login = () => {
                             onChange={(e) => setPassword(e)}
                         />
                     </div>
-                    { disabled?
-                    <div class="alert alert-danger" role="alert">
-                        <p>Usuário ou senha inválido :(</p>
-                    </div>
-                    :null
-                    }
                     <div class="container-button">
-                        <button type="submit" class="w-100 btn btn-dark">Login</button>
+                        <button type="submit" class="w-100 btn btn-dark">Registrar</button>
                     </div>
                 </form>
-
-                <div>
-                    <p>Ainda não possui uma conta? <Link to="/register">Registrar uma nova conta</Link></p>
-                </div>
             </div>
         </div>
     )
-}
 
+}
