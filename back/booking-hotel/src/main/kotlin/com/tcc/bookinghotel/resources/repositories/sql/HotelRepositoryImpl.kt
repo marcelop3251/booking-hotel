@@ -64,4 +64,13 @@ class HotelRepositoryImpl(
             it.toDomain(organizationEntity!!, roomEntity.toList())
         }
     }
+
+    override suspend fun findByRoomId(roomId: Int): Hotel? {
+        return roomRepositorySpring.findById(roomId)?.let { roomEntity ->
+            hotelRepositorySpring.findById(roomEntity.hotelId)?.let { hotelEntity ->
+                val organizationEntity = organizationRepositorySpring.findById(hotelEntity.organizationId)
+                hotelEntity.toDomain(organizationEntity!!, listOf(roomEntity))
+            }
+        }
+    }
 }

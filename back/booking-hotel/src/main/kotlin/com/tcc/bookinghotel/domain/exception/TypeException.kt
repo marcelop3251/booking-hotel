@@ -5,4 +5,5 @@ enum class TypeException {
     CUSTOMER_REGISTRATION,
     INCONSISTENCE,
     HOTEL_ALREADY_REGISTRED,
+    ROOM_NOT_FOUND,
 }

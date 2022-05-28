@@ -10,7 +10,10 @@ import org.springframework.stereotype.Component
 class RoomRepositoryImpl(
     private val roomRepositorySpring: RoomRepositorySpring
 ) : RoomRepository {
+
     override suspend fun create(room: Room, hotelId: Int): Room {
         return roomRepositorySpring.save(RoomEntity(room, hotelId)).toDomain()
     }
+
+
 }

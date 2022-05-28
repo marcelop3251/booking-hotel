@@ -40,7 +40,6 @@ class SpringConfiguration(
             .pathMatchers(HttpMethod.POST,"/login").permitAll()
             .pathMatchers(HttpMethod.POST, "/customer").permitAll()
             .pathMatchers(HttpMethod.POST, "/company").permitAll()
-            .pathMatchers(HttpMethod.GET, "/hotel").permitAll()
             .anyExchange().authenticated()
             .and()
             .cors {

@@ -32,7 +32,8 @@ create table hotel(
 
 create table Room(
     id serial PRIMARY KEY,
-    rent_value varchar(10),
+    type varchar(50) NOT NULL,
+    rent_value varchar(10) NOT NULL,
     quantity SMALLINT NOT NULL,
     description VARCHAR NOT NULL,
     hotel_id SMALLINT references hotel(id)
