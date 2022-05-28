@@ -29,6 +29,7 @@ class RouterConfiguration(
         }
 
         POST("/room/{hotel_id}", hotelHandler::registerRoom)
+        GET("/room/{room_id}", hotelHandler::findByRoomId)
         onError<Exception> { exception, request -> exceptionHandler.handler(exception, request) }
     }
 

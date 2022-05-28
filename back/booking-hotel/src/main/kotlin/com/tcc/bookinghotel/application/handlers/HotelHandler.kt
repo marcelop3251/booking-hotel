@@ -4,7 +4,10 @@ import com.tcc.bookinghotel.application.dto.RegisterHotelRequest
 import com.tcc.bookinghotel.application.dto.RegisterHotelResponse
 import com.tcc.bookinghotel.application.dto.RegisterRoomRequest
 import com.tcc.bookinghotel.application.dto.RegisterRoomResponse
+import com.tcc.bookinghotel.domain.exception.NotFoundItemException
+import com.tcc.bookinghotel.domain.exception.TypeException
 import com.tcc.bookinghotel.domain.usecase.FindAllHotel
+import com.tcc.bookinghotel.domain.usecase.FindHoteByRoomId
 import com.tcc.bookinghotel.domain.usecase.RegisterNewHotel
 import com.tcc.bookinghotel.domain.usecase.RegisterNewRoom
 import kotlinx.coroutines.reactor.asFlux
@@ -22,7 +25,8 @@ private const val COMPANY_ID_PATH_VARIABLE = "company_id"
 class HotelHandler(
     val registerNewHotel: RegisterNewHotel,
     val registerRoom: RegisterNewRoom,
-    val findAlHotel: FindAllHotel
+    val findAlHotel: FindAllHotel,
+    val findHotelByRoomId: FindHoteByRoomId,
 ) {
 
     val log = LoggerFactory.getLogger(javaClass)
@@ -49,5 +53,12 @@ class HotelHandler(
         return ServerResponse.ok().bodyAndAwait(findAlHotel.execute()).also {
             log.info("Finish find all hotel")
         }
+    }
+
+    suspend fun findByRoomId(request: ServerRequest): ServerResponse {
+        log.info("start find hotel by room id");
+        val roomId = request.pathVariable("room_id")
+        val hotel = findHotelByRoomId.execute(roomId.toInt()) ?: throw NotFoundItemException(TypeException.ROOM_NOT_FOUND, "Not was possible identifier romm by id ${roomId}");
+        return ServerResponse.ok().bodyValueAndAwait(hotel)
     }
 }

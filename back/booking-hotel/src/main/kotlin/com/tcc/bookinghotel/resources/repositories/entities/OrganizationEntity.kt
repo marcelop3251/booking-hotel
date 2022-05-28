@@ -2,9 +2,7 @@ package com.tcc.bookinghotel.resources.repositories.entities
 
 import com.tcc.bookinghotel.domain.entity.Company
 import com.tcc.bookinghotel.domain.entity.Hotel
-import io.azam.ulidj.ULID
 import org.springframework.data.annotation.Id
-import org.springframework.data.annotation.Version
 import org.springframework.data.relational.core.mapping.Table
 
 @Table("organization")
