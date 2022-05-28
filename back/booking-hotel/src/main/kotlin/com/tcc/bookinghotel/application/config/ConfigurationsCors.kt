@@ -7,14 +7,14 @@ import org.springframework.web.cors.reactive.CorsWebFilter
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource
 
 @Component
-class Configurations {
+class ConfigurationsCors {
 
     @Bean
     fun addCors(): CorsWebFilter {
         val corsConfig = CorsConfiguration()
 
         corsConfig.allowedMethods = listOf("POST","OPTIONS", "GET", "DELETE", "PUT")
-        corsConfig.allowedOrigins = listOf("http://localhost:3000")
+        corsConfig.allowedOrigins = listOf("*")
         corsConfig.maxAge = 5
         corsConfig.allowedHeaders = listOf("x-requested-with", "authorization", "Content-Type", "Authorization", "access-control-allow-methods", "access-control-allow-origin")
         corsConfig.exposedHeaders = listOf("Authorization")
