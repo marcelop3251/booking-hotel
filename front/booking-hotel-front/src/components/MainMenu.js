@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import React from 'react';
 
 export const MainMenu = (props) => ( 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
