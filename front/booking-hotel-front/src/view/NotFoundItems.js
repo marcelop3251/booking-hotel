@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { MainMenu } from "../components/MainMenu";
+import React from 'react';
 
 export default function NotFoundItems() {
     const navigate = useNavigate()

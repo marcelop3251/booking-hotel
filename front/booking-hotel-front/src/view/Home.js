@@ -3,6 +3,7 @@ import { DetailsService } from "../api/DetailsServices"
 import { Header } from "../components/Header"
 import { MainMenu } from "../components/MainMenu"
 import { SectionProduct } from "../components/SectionProduct"
+import React from 'react';
 
 export const Home = () => { 
     console.log("Inicianto o componentes");

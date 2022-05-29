@@ -1,4 +1,5 @@
 import { MainMenu } from "./MainMenu";
+import React from 'react';
 
 export const Header = (props) => (
     <header class="bg-dark py-5">

@@ -10,6 +10,7 @@ import { Login } from "./view/Login";
 import Notfound from "./view/NotFound";
 import NotFoundItems from "./view/NotFoundItems";
 import { RegisterNewAccount } from "./view/RegisterNewAccount";
+import React from 'react';
 
 function App() {
   return (

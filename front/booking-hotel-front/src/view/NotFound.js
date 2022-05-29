@@ -1,5 +1,6 @@
 import { Button } from "react-bootstrap";
 import { MainMenu } from "../components/MainMenu";
+import React from 'react';
 
 export default function Notfound() {
     return (
