@@ -22,6 +22,8 @@ export const Login = () => {
                 return navigate('/home')
             }
         }).catch(error => { 
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
             setDisabled(true)
         });
     }
@@ -45,7 +47,7 @@ export const Login = () => {
                             Email
                         </label>
                         <input
-                            id="exampleEmail"
+                            id="email"
                             name="email"
                             placeholder="something@idk.cool"
                             type="email"
@@ -61,7 +63,7 @@ export const Login = () => {
                             Senha
                         </label>
                         <input
-                            id="examplePassword"
+                            id="password"
                             name="password"
                             placeholder="don't tell!"
                             type="password"
