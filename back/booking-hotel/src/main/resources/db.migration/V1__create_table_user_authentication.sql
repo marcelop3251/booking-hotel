@@ -38,3 +38,12 @@ create table Room(
     description VARCHAR NOT NULL,
     hotel_id SMALLINT references hotel(id)
 );
+
+create table booking(
+    id serial PRIMARY KEY,
+    start_date DATE NOT NULL DEFAULT CURRENT_DATE,
+    end_date DATE NOT NULL,
+    description VARCHAR(255),
+    status varchar(100),
+    customer_id SMALLINT REFERENCES customer(id)
+);
