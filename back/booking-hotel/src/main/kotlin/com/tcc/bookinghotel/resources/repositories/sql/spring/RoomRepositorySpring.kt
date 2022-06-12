@@ -2,6 +2,7 @@ package com.tcc.bookinghotel.resources.repositories.sql.spring
 
 import com.tcc.bookinghotel.resources.repositories.entities.RoomEntity
 import kotlinx.coroutines.flow.Flow
+import org.springframework.data.r2dbc.repository.Query
 import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.stereotype.Repository
 
@@ -9,4 +10,6 @@ import org.springframework.stereotype.Repository
 interface RoomRepositorySpring : CoroutineCrudRepository<RoomEntity, Int> {
 
     suspend fun findByHotelId(hotelId: Int): Flow<RoomEntity>
+    @Query("select sum(r.quantity) from room r.hotelId = ?1")
+    suspend fun sumByHotelId(hotelId: Int): Int
 }

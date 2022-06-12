@@ -45,5 +45,6 @@ create table booking(
     end_date DATE NOT NULL,
     description VARCHAR(255),
     status varchar(100),
-    customer_id SMALLINT REFERENCES customer(id)
+    customer_id SMALLINT REFERENCES credential(id),
+    room_id SMALLINT REFERENCES room(id)
 );

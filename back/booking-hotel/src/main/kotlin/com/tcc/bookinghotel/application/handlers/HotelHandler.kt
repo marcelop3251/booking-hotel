@@ -1,11 +1,14 @@
 package com.tcc.bookinghotel.application.handlers
 
+import com.tcc.bookinghotel.application.dto.BookingRequest
 import com.tcc.bookinghotel.application.dto.RegisterHotelRequest
 import com.tcc.bookinghotel.application.dto.RegisterHotelResponse
 import com.tcc.bookinghotel.application.dto.RegisterRoomRequest
 import com.tcc.bookinghotel.application.dto.RegisterRoomResponse
 import com.tcc.bookinghotel.domain.exception.NotFoundItemException
 import com.tcc.bookinghotel.domain.exception.TypeException
+import com.tcc.bookinghotel.domain.usecase.BookingHotel
+import com.tcc.bookinghotel.domain.usecase.FindAllBooking
 import com.tcc.bookinghotel.domain.usecase.FindAllHotel
 import com.tcc.bookinghotel.domain.usecase.FindHoteByRoomId
 import com.tcc.bookinghotel.domain.usecase.RegisterNewHotel
@@ -27,6 +30,8 @@ class HotelHandler(
     val registerRoom: RegisterNewRoom,
     val findAlHotel: FindAllHotel,
     val findHotelByRoomId: FindHoteByRoomId,
+    val bookingHotel: BookingHotel,
+    val findAllBooking: FindAllBooking,
 ) {
 
     val log = LoggerFactory.getLogger(javaClass)
@@ -60,5 +65,18 @@ class HotelHandler(
         val roomId = request.pathVariable("room_id")
         val hotel = findHotelByRoomId.execute(roomId.toInt()) ?: throw NotFoundItemException(TypeException.ROOM_NOT_FOUND, "Not was possible identifier romm by id ${roomId}");
         return ServerResponse.ok().bodyValueAndAwait(hotel)
+    }
+
+    suspend fun booking(request: ServerRequest): ServerResponse {
+        log.info("Start making booking hotel")
+        val bookingRequest = request.awaitBody<BookingRequest>()
+        val customerId = request.headers().firstHeader("x-customer-id")!!
+        val booking = bookingHotel.execute(bookingRequest.toDomain(), customerId.toInt())
+        return ServerResponse.ok().bodyValueAndAwait(booking)
+    }
+
+    suspend fun findAllBooking(request: ServerRequest): ServerResponse {
+        val customerId = request.headers().firstHeader("x-customer-id")!!
+        return ServerResponse.ok().bodyAndAwait(findAllBooking.execute(customerId))
     }
 }

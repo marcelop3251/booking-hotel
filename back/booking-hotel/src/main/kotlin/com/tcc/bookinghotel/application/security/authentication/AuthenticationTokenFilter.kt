@@ -2,8 +2,8 @@ package com.tcc.bookinghotel.application.security.authentication
 
 import com.tcc.bookinghotel.application.security.TokenService
 import com.tcc.bookinghotel.resources.repositories.sql.spring.CredentialRepositorySpring
-import com.tcc.bookinghotel.resources.repositories.sql.spring.CustomerRepositorySpring
 import kotlinx.coroutines.runBlocking
+import org.springframework.http.HttpHeaders
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
@@ -22,17 +22,24 @@ class AuthenticationTokenFilter(
         val token = getToken(exchange)
 
         if (token != null && tokenService.isValid(token)) {
-            authenticateCustomer(token)
+            val customerId = authenticateCustomer(token)
+            putCustomerInHeader(exchange, customerId)
         }
         return chain.filter(exchange)
     }
 
-    private fun authenticateCustomer(token: String?) {
-        val cutomerId = tokenService.getIdCust(token)
+    private fun putCustomerInHeader(exchange: ServerWebExchange, customerId: String) {
+        val request = exchange.request.mutate().header("x-customer-id", customerId).build()
+        exchange.mutate().request(request).build()
+    }
+
+    private fun authenticateCustomer(token: String?): String {
+        val customerId = tokenService.getIdCust(token)
         val credential = runBlocking {
-            repository.findById(cutomerId.toInt())
+            repository.findById(customerId.toInt())
         }
         SecurityContextHolder.getContext().authentication = UsernamePasswordAuthenticationToken(credential!!.id, null, null)
+        return customerId
     }
 
 

@@ -23,20 +23,22 @@ class RouterConfiguration(
     ) = coRouter {
         POST("/customer", registerCustomerHandler::registerCustomer)
         POST("/company", registerCompanyHandler::register)
-        "/hotel".nest {
-            POST("/{company_id}", hotelHandler::registerHotel)
-            GET("", hotelHandler::findAll)
-        }
-
-        POST("/room/{hotel_id}", hotelHandler::registerRoom)
-        GET("/room/{room_id}", hotelHandler::findByRoomId)
         onError<Exception> { exception, request -> exceptionHandler.handler(exception, request) }
     }
 
-    fun searchHotelRoutes(
+    @Bean
+    fun HotelRoutes(
         hotelHandler: HotelHandler
     ) = coRouter {
-        ""
+        POST("/room/{hotel_id}", hotelHandler::registerRoom)
+        GET("/room/{room_id}", hotelHandler::findByRoomId)
+
+        "/hotel".nest {
+            POST("/booking", hotelHandler::booking)
+            GET("/booking", hotelHandler::findAllBooking)
+            POST("/{company_id}", hotelHandler::registerHotel)
+            GET("", hotelHandler::findAll)
+        }
     }
 }
 

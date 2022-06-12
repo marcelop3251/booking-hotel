@@ -53,8 +53,12 @@ class HotelRepositoryImpl(
             log.info("Hotel create with success {}", it)
         }
 
-    override suspend fun findById(hotelId: Int): Hotel {
-        TODO("Not yet implemented")
+    override suspend fun findById(hotelId: Int): Hotel? {
+        return hotelRepositorySpring.findById(hotelId)?.let {
+            val organization = organizationRepositorySpring.findById(it.organizationId)
+                ?: throw InconsistentDataException(TypeException.INCONSISTENCE, MESSAGE_HOTEL_INCONSISTENCY_DATA)
+            it.toDomain(organization)
+        }
     }
 
     override suspend fun findAll(): Flow<Hotel> {

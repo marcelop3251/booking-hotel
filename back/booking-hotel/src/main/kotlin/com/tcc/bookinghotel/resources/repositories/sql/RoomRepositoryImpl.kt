@@ -15,5 +15,13 @@ class RoomRepositoryImpl(
         return roomRepositorySpring.save(RoomEntity(room, hotelId)).toDomain()
     }
 
+    override suspend fun findById(id: Int): Room? {
+        return roomRepositorySpring.findById(id)?.toDomain()
+    }
+
+    override suspend fun getTotalBedrooms(hotelId: Int): Int {
+        return roomRepositorySpring.sumByHotelId(hotelId)
+    }
+
 
 }
