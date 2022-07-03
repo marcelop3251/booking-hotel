@@ -56,3 +56,19 @@ create table check_point(
     customer_id SMALLINT REFERENCES credential(id),
     booking_id SMALLINT REFERENCES booking(id)
 );
+
+create table service(
+    id serial PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    price NUMERIC(5,2) NOT NULL,
+    description VARCHAR(200) NOT NULL,
+    type VARCHAR(100) NOT NULL
+);
+
+
+create table request_service(
+    id serial PRIMARY KEY,
+    createdAt DATE NOT NULL,
+    booking_id SMALLINT REFERENCES booking(id),
+    service SMALLINT REFERENCES service(id)
+);

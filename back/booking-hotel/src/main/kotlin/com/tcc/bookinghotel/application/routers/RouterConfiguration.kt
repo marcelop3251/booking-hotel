@@ -34,6 +34,7 @@ class RouterConfiguration(
             POST("/booking", hotelHandler::booking)
             GET("/booking", hotelHandler::findAllBooking)
             GET("/check-in", hotelHandler::findAllBookingApproved)
+            GET("/check-out", hotelHandler::findAllBookingFinalized)
             POST("/{company_id}", hotelHandler::registerHotel)
             GET("", hotelHandler::findAll)
         }

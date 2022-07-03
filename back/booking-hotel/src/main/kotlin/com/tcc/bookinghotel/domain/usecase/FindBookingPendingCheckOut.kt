@@ -7,13 +7,13 @@ import com.tcc.bookinghotel.domain.repository.CheckPointRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 
-class FindBookingPendingCheckIn(
+class FindBookingPendingCheckOut(
     val bookingRepository: BookingRepository,
     val checkPointRepository: CheckPointRepository,
 ) {
 
     suspend fun execute(customerId: String): Flow<Booking> {
-        return bookingRepository.findByCustomerIdAndStatus(customerId, StatusBooking.CREATE)
+        return bookingRepository.findByCustomerIdAndStatus(customerId, StatusBooking.CHECK_IN_APPROVED)
             .filter {
                 checkPointRepository.notExistCheckPoint(customerId, it.id, it.hotel?.id)
             }

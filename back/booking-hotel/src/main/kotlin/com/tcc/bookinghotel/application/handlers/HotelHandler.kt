@@ -11,6 +11,7 @@ import com.tcc.bookinghotel.domain.usecase.BookingHotel
 import com.tcc.bookinghotel.domain.usecase.FindAllBooking
 import com.tcc.bookinghotel.domain.usecase.FindAllHotel
 import com.tcc.bookinghotel.domain.usecase.FindBookingPendingCheckIn
+import com.tcc.bookinghotel.domain.usecase.FindBookingPendingCheckOut
 import com.tcc.bookinghotel.domain.usecase.FindHoteByRoomId
 import com.tcc.bookinghotel.domain.usecase.RegisterNewHotel
 import com.tcc.bookinghotel.domain.usecase.RegisterNewRoom
@@ -33,7 +34,8 @@ class HotelHandler(
     val findHotelByRoomId: FindHoteByRoomId,
     val bookingHotel: BookingHotel,
     val findAllBooking: FindAllBooking,
-    val findBookingPendingCheckIn: FindBookingPendingCheckIn
+    val findBookingPendingCheckIn: FindBookingPendingCheckIn,
+    val findBookingPendingCheckOut: FindBookingPendingCheckOut
 ) {
 
     val log = LoggerFactory.getLogger(javaClass)
@@ -85,5 +87,10 @@ class HotelHandler(
     suspend fun findAllBookingApproved(request: ServerRequest): ServerResponse {
         val customerId = request.headers().firstHeader("x-customer-id")!!
         return ServerResponse.ok().bodyAndAwait(findBookingPendingCheckIn.execute(customerId))
+    }
+
+    suspend fun findAllBookingFinalized(request: ServerRequest): ServerResponse {
+        val customerId = request.headers().firstHeader("x-customer-id")!!
+        return ServerResponse.ok().bodyAndAwait(findBookingPendingCheckOut.execute(customerId))
     }
 }

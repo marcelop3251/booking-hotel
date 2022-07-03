@@ -16,7 +16,7 @@ class BookingHotel(
 
     suspend fun execute(booking: Booking, customerId: Int, roomId: Int): Booking {
         val room = roomRepository.findById(booking.hotel?.id!!) ?: throw NotFoundItemException(TypeException.ROOM_NOT_FOUND, "Room not found for id: ${booking.hotel.id}")
-        val bookingFromDB = bookingRepository.countByRoomIdAndStatusIn(booking.hotel.id, listOf(StatusBooking.CREATE, StatusBooking.APPROVED))
+        val bookingFromDB = bookingRepository.countByRoomIdAndStatusIn(booking.hotel.id, listOf(StatusBooking.CREATE, StatusBooking.CHECK_IN))
         roomIsAvailable(room, bookingFromDB)
         return bookingRepository.create(booking, customerId, roomId)
     }

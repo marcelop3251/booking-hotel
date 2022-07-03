@@ -8,6 +8,7 @@ import com.tcc.bookinghotel.domain.usecase.BookingHotel
 import com.tcc.bookinghotel.domain.usecase.FindAllBooking
 import com.tcc.bookinghotel.domain.usecase.FindAllHotel
 import com.tcc.bookinghotel.domain.usecase.FindBookingPendingCheckIn
+import com.tcc.bookinghotel.domain.usecase.FindBookingPendingCheckOut
 import com.tcc.bookinghotel.domain.usecase.FindHoteByRoomId
 import com.tcc.bookinghotel.domain.usecase.RegisterNewHotel
 import com.tcc.bookinghotel.domain.usecase.RegisterNewRoom
@@ -40,4 +41,10 @@ class BeansDomains {
         bookingRepository: BookingRepository,
         checkPointRepository: CheckPointRepository
     ) = FindBookingPendingCheckIn(bookingRepository, checkPointRepository)
+
+    @Bean
+    fun findBookingPendingCheckOut(
+        bookingRepository: BookingRepository,
+        checkPointRepository: CheckPointRepository
+    ) = FindBookingPendingCheckOut(bookingRepository, checkPointRepository)
 }
