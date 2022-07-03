@@ -48,3 +48,11 @@ create table booking(
     customer_id SMALLINT REFERENCES credential(id),
     room_id SMALLINT REFERENCES room(id)
 );
+
+create table check_point(
+    id serial PRIMARY KEY,
+    type VARCHAR(100),
+    hotel_id SMALLINT REFERENCES hotel(id),
+    customer_id SMALLINT REFERENCES credential(id),
+    booking_id SMALLINT REFERENCES booking(id)
+);

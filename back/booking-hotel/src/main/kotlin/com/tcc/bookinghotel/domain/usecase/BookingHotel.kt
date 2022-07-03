@@ -14,11 +14,11 @@ class BookingHotel(
     private val roomRepository: RoomRepository,
 ) {
 
-    suspend fun execute(booking: Booking, customerId: Int): Booking {
-        val room = roomRepository.findById(booking.room?.id!!) ?: throw NotFoundItemException(TypeException.ROOM_NOT_FOUND, "Room not found for id: ${booking.room.id}")
-        val bookingFromDB = bookingRepository.countByRoomIdAndStatusIn(booking.room.id, listOf(StatusBooking.CREATE, StatusBooking.APPROVED))
+    suspend fun execute(booking: Booking, customerId: Int, roomId: Int): Booking {
+        val room = roomRepository.findById(booking.hotel?.id!!) ?: throw NotFoundItemException(TypeException.ROOM_NOT_FOUND, "Room not found for id: ${booking.hotel.id}")
+        val bookingFromDB = bookingRepository.countByRoomIdAndStatusIn(booking.hotel.id, listOf(StatusBooking.CREATE, StatusBooking.APPROVED))
         roomIsAvailable(room, bookingFromDB)
-        return bookingRepository.create(booking, customerId)
+        return bookingRepository.create(booking, customerId, roomId)
     }
 
     private fun roomIsAvailable(room: Room, bookingFromDb: Int) {

@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository
 interface HotelRepositorySpring : CoroutineCrudRepository<HotelEntity, Int> {
 
     suspend fun findByOrganizationId(organizationId: Int): HotelEntity?
+    //suspend fun findByRoomId(roomId: Int): HotelEntity?
 }

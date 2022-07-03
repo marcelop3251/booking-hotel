@@ -10,6 +10,7 @@ import com.tcc.bookinghotel.domain.exception.TypeException
 import com.tcc.bookinghotel.domain.usecase.BookingHotel
 import com.tcc.bookinghotel.domain.usecase.FindAllBooking
 import com.tcc.bookinghotel.domain.usecase.FindAllHotel
+import com.tcc.bookinghotel.domain.usecase.FindBookingPendingCheckIn
 import com.tcc.bookinghotel.domain.usecase.FindHoteByRoomId
 import com.tcc.bookinghotel.domain.usecase.RegisterNewHotel
 import com.tcc.bookinghotel.domain.usecase.RegisterNewRoom
@@ -32,6 +33,7 @@ class HotelHandler(
     val findHotelByRoomId: FindHoteByRoomId,
     val bookingHotel: BookingHotel,
     val findAllBooking: FindAllBooking,
+    val findBookingPendingCheckIn: FindBookingPendingCheckIn
 ) {
 
     val log = LoggerFactory.getLogger(javaClass)
@@ -71,12 +73,17 @@ class HotelHandler(
         log.info("Start making booking hotel")
         val bookingRequest = request.awaitBody<BookingRequest>()
         val customerId = request.headers().firstHeader("x-customer-id")!!
-        val booking = bookingHotel.execute(bookingRequest.toDomain(), customerId.toInt())
+        val booking = bookingHotel.execute(bookingRequest.toDomain(), customerId.toInt(), bookingRequest.roomId)
         return ServerResponse.ok().bodyValueAndAwait(booking)
     }
 
     suspend fun findAllBooking(request: ServerRequest): ServerResponse {
         val customerId = request.headers().firstHeader("x-customer-id")!!
         return ServerResponse.ok().bodyAndAwait(findAllBooking.execute(customerId))
+    }
+
+    suspend fun findAllBookingApproved(request: ServerRequest): ServerResponse {
+        val customerId = request.headers().firstHeader("x-customer-id")!!
+        return ServerResponse.ok().bodyAndAwait(findBookingPendingCheckIn.execute(customerId))
     }
 }

@@ -1,7 +1,7 @@
 package com.tcc.bookinghotel.resources.repositories.entities
 
 import com.tcc.bookinghotel.domain.entity.Booking
-import com.tcc.bookinghotel.domain.entity.Room
+import com.tcc.bookinghotel.domain.entity.Hotel
 import com.tcc.bookinghotel.domain.entity.StatusBooking
 import java.time.LocalDate
 import org.springframework.data.annotation.Id
@@ -18,22 +18,22 @@ data class BookingEntity(
     val customerId: Int,
     val roomId: Int
 ) {
-    constructor(booking: Booking, customerId: Int): this (
+    constructor(booking: Booking, customerId: Int, roomId: Int): this (
         id = booking.id,
         startDate = booking.startDate,
         endDate = booking.endDate,
         description = booking.description,
         status = booking.status.name,
         customerId = customerId,
-        roomId = booking.room?.id!!  // TODO ADICIONAR TRATAMENTO para os casos de id null
+        roomId =  roomId, // TODO ADICIONAR TRATAMENTO para os casos de id null
     )
 
-    fun toDomain(room: Room? = null) = Booking(
+    fun toDomain(hotel: Hotel? = null) = Booking(
         id = id,
         startDate = startDate,
         endDate = endDate,
         description = description!!,
         status = StatusBooking.valueOf(status),
-        room = room
+        hotel = hotel
     )
 }

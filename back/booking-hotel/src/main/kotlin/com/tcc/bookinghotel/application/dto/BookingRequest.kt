@@ -10,13 +10,12 @@ class BookingRequest(
     val endDate: LocalDate,
     val description: String = "",
     val status: StatusBooking = StatusBooking.CREATE,
-    val room: Room?= null
+    val roomId: Int
 ) {
     fun toDomain() = Booking(
         startDate = startDate,
         endDate = endDate,
         description = description,
         status = status,
-        room = room
     )
 }

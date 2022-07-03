@@ -5,9 +5,6 @@ import com.tcc.bookinghotel.application.handlers.RegisterCompanyHandler
 import com.tcc.bookinghotel.application.handlers.RegisterCustomerHandler
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.web.reactive.function.server.CoRouterFunctionDsl
-import org.springframework.web.reactive.function.server.ServerRequest
-import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.coRouter
 
 @Configuration
@@ -36,6 +33,7 @@ class RouterConfiguration(
         "/hotel".nest {
             POST("/booking", hotelHandler::booking)
             GET("/booking", hotelHandler::findAllBooking)
+            GET("/check-in", hotelHandler::findAllBookingApproved)
             POST("/{company_id}", hotelHandler::registerHotel)
             GET("", hotelHandler::findAll)
         }
