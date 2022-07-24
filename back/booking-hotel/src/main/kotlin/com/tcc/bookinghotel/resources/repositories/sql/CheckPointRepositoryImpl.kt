@@ -9,7 +9,7 @@ class CheckPointRepositoryImpl(
     private val checkPointRepositorySpring: CheckPointRepositorySpring
 ) : CheckPointRepository {
 
-    override suspend fun notExistCheckPoint(customerId: String, bookingId: Int?, hotelId: Int?): Boolean {
+    override suspend fun notExistCheckPoint(customerId: Int, bookingId: Int?, hotelId: Int?): Boolean {
         return !checkPointRepositorySpring.existsByCustomerIdAndBookingIdAndHotelId(customerId, bookingId, hotelId)
     }
 }

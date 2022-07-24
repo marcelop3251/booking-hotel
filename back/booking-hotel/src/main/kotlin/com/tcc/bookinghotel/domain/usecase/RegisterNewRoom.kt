@@ -17,7 +17,7 @@ class RegisterNewRoom(
             TypeException.HOTEL_NOT_FOUND,
             "Hotel not found exception ${room.id}"
         )
-        val quantityBedrooms = roomRepository.getTotalBedrooms(hotelId)
+        val quantityBedrooms = roomRepository.getTotalBedrooms(hotelId) ?: 0
         if (hotel.numberBedrooms <= quantityBedrooms.plus(room.quantity)) {
             throw RoomUnavailableException(TypeException.ROOM_UNAVAILABLE, "Room unavailable exception")
         }

@@ -8,5 +8,6 @@ data class Booking(
     val endDate: LocalDate,
     val description: String,
     val status: StatusBooking,
-    val hotel: Hotel ?= null
+    val hotel: Hotel ?= null,
+    val customer: Customer?= null
 )

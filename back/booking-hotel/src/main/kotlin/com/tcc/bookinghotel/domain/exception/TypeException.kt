@@ -8,4 +8,6 @@ enum class TypeException {
     ROOM_NOT_FOUND,
     ROOM_UNAVAILABLE,
     HOTEL_NOT_FOUND,
+    BOOKING_NOT_FOUND,
+    SERVICE_NOT_FOUND
 }

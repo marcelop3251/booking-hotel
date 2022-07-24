@@ -1,6 +1,7 @@
 package com.tcc.bookinghotel.resources.repositories.entities
 
 import com.tcc.bookinghotel.domain.entity.Booking
+import com.tcc.bookinghotel.domain.entity.Customer
 import com.tcc.bookinghotel.domain.entity.Hotel
 import com.tcc.bookinghotel.domain.entity.StatusBooking
 import java.time.LocalDate
@@ -28,12 +29,13 @@ data class BookingEntity(
         roomId =  roomId, // TODO ADICIONAR TRATAMENTO para os casos de id null
     )
 
-    fun toDomain(hotel: Hotel? = null) = Booking(
+    fun toDomain(hotel: Hotel? = null, customer: Customer? = null) = Booking(
         id = id,
         startDate = startDate,
         endDate = endDate,
         description = description!!,
         status = StatusBooking.valueOf(status),
-        hotel = hotel
+        hotel = hotel,
+        customer = customer
     )
 }

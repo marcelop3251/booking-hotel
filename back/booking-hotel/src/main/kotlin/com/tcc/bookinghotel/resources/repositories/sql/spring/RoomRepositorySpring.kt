@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository
 interface RoomRepositorySpring : CoroutineCrudRepository<RoomEntity, Int> {
 
     suspend fun findByHotelId(hotelId: Int): Flow<RoomEntity>
-    @Query("select sum(r.quantity) from room r.hotelId = ?1")
-    suspend fun sumByHotelId(hotelId: Int): Int
+
+    @Query("select sum(r.quantity) from room r where r.hotel_id = $1")
+    suspend fun sumByHotelId(hotelId: Int): Int?
 }

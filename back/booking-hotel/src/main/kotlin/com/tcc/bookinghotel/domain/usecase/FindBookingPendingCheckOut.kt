@@ -12,7 +12,7 @@ class FindBookingPendingCheckOut(
     val checkPointRepository: CheckPointRepository,
 ) {
 
-    suspend fun execute(customerId: String): Flow<Booking> {
+    suspend fun execute(customerId: Int): Flow<Booking> {
         return bookingRepository.findByCustomerIdAndStatus(customerId, StatusBooking.CHECK_IN_APPROVED)
             .filter {
                 checkPointRepository.notExistCheckPoint(customerId, it.id, it.hotel?.id)
