@@ -5,3 +5,10 @@
 .v-200 { 
     height: 200px;
 }
+
+.text-styled { 
+    background: #e4e4e5;
+    margin-top: 50px;
+    padding: 15px;
+    border-radius: 10px;
+}

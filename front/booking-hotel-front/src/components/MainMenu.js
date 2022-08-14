@@ -9,12 +9,11 @@ export const MainMenu = (props) => (
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><Link className="nav-link active" to="/home">Home</Link></li>
-
-                <li class="nav-item"><a class="nav-link" href="#!">Serviços de Quarto</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">Refeição</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">Reservas</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">Check-in</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">Check-out</a></li>
+                <li class="nav-item"><Link className="nav-link active" to="/room-service">Serviços de Quarto</Link></li>
+                <li class="nav-item"><Link className="nav-link active" to="/room-meal">Refeição</Link></li>
+                <li class="nav-item"><Link className="nav-link active" to="/booking">Reservas</Link></li>
+                <li class="nav-item"><Link className="nav-link active" to="/check-in">Check-in</Link></li>
+                <li class="nav-item"><Link className="nav-link active" to="/check-out">Check-out</Link></li>
             </ul>
         </div>
     </div>

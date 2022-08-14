@@ -1,0 +1,34 @@
+curl --location --request GET 'http://localhost:8080/admin/booking' \
+--header 'Authorization: Bearer 
+[
+    {
+        "id": 7,
+        "startDate": "2022-07-12",
+        "endDate": "2022-08-25",
+        "description": "Montanhas",
+        "status": "CREATE",
+        "hotel": {
+            "id": 4,
+            "name": "Montanhas",
+            "cnpj": "11122233344461",
+            "city": "Pocos de caldas",
+            "numberBedrooms": 5,
+            "room": [
+                {
+                    "id": 6,
+                    "type": "Quarto Solteiro",
+                    "rentValue": 35.50,
+                    "quantity": 1,
+                    "description": "Quarto de frente para as cachueiras"
+                }
+            ]
+        },
+        "customer": {
+            "id": 5,
+            "name": "Marcelo Garcia Palma",
+            "email": "marcelop3251@gmail.com",
+            "password": "secret"
+        }
+    }
+]
+

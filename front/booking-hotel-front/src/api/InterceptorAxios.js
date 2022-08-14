@@ -29,8 +29,8 @@ HTTP.interceptors.response.use (
 
     }, 
     error => { 
-        console.log(error.response.status)
-        if (error.response.status == 401) {
+        console.log(error.response)
+        if (error.response != null && error.response.status == 401) {
             console.log("Go back login");
             localStorage.removeItem('token');
             window.location.pathname = "/login"
