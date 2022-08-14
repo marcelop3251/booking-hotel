@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component
 @Component
 class TokenService {
 
-    private val expiration: Long = 600000
+    private val expiration: Long = 3600000
 
     @Value("\${jwt.secret}")
     private lateinit var jwtSecret: String

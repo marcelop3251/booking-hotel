@@ -5,6 +5,7 @@ import com.tcc.bookinghotel.domain.entity.StatusBooking
 import com.tcc.bookinghotel.domain.repository.BookingRepository
 import com.tcc.bookinghotel.domain.repository.HotelRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class FindAllBooking(
     private val bookingRepository: BookingRepository,
@@ -12,6 +13,10 @@ class FindAllBooking(
 ) {
 
     suspend fun execute(customerId: Int): Flow<Booking> {
-        return bookingRepository.findAllByStatusAndUserBackoffice(customerId, StatusBooking.CREATE)
+        return bookingRepository.findByCustomerId(customerId)
+    }
+
+    suspend fun execute(customerId: Int, statusBooking: StatusBooking): Flow<Booking> {
+        return bookingRepository.findByCustomerIdAndStatus(customerId, statusBooking)
     }
 }

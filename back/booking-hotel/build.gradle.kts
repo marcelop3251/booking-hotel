@@ -33,8 +33,6 @@ dependencies {
 	implementation("io.azam.ulidj:ulidj:1.0.1")
 	implementation("com.newrelic.agent.java:newrelic-api:7.4.0")
 
-
-
 	runtimeOnly("io.r2dbc:r2dbc-postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")

@@ -1,3 +1,4 @@
+Fazer uma reserva
 curl --location --request GET 'http://localhost:8080/admin/booking' \
 --header 'Authorization: Bearer 
 [
@@ -31,4 +32,13 @@ curl --location --request GET 'http://localhost:8080/admin/booking' \
         }
     }
 ]
+
+Listar serviços de quarto
+HOSPITALITY
+
+curl --location --request GET 'http://localhost:8080/hotel/services/HOSPITALITY' \
+--header 'Origin: http://localhost:3000' \
+--header 'Access-Control-Request-Method: GET' \
+--header 'Authorization: Bearer token' \
+--header 'Content-Type: application/json'
 

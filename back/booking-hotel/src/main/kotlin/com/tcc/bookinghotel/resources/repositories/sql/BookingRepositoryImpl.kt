@@ -8,8 +8,7 @@ import com.tcc.bookinghotel.domain.repository.CustomerRepository
 import com.tcc.bookinghotel.domain.repository.HotelRepository
 import com.tcc.bookinghotel.resources.repositories.entities.BookingEntity
 import com.tcc.bookinghotel.resources.repositories.sql.spring.BookingRepositorySpring
-import com.tcc.bookinghotel.resources.repositories.sql.spring.HotelRepositorySpring
-import com.tcc.bookinghotel.resources.repositories.sql.spring.RoomRepositorySpring
+import java.time.LocalDate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.springframework.stereotype.Component
@@ -26,8 +25,8 @@ class BookingRepositoryImpl(
         return bookingRepositorySpring.save(BookingEntity(booking, customerId, roomId)).toDomain()
     }
 
-    override suspend fun countByRoomIdAndStatusIn(id: Int, status: List<StatusBooking>): Int {
-        return bookingRepositorySpring.countByRoomIdAndStatusIn(id, status.map { it.name })
+    override suspend fun countByRoomIdAndStatusInAndDate(id: Int, status: List<StatusBooking>, startDate: LocalDate, endDate: LocalDate): Int {
+        return bookingRepositorySpring.countByRoomIdAndStatusInAndDate(id, status.map { it.name }, startDate, endDate)
     }
 
     override suspend fun findAll(customerId: Int): Flow<Booking> {
@@ -50,7 +49,18 @@ class BookingRepositoryImpl(
     }
 
     override suspend fun findByCustomerIdAndStatus(customerId: Int, statusBooking: StatusBooking): Flow<Booking> {
-        return bookingRepositorySpring.findByCustomerIdAndStatus(customerId, statusBooking.name).map { it.toDomain() }
+        val customer = customerRepository.findById(customerId)
+        return bookingRepositorySpring.findByCustomerIdAndStatus(customerId, statusBooking.name).map {
+            val hotel = hotelRepository.findByRoomId(it.roomId)
+            it.toDomain(hotel = hotel, customer = customer)
+        }
+    }
+
+    override suspend fun findByCustomerId(customerId: Int): Flow<Booking> {
+        return bookingRepositorySpring.findAllByCustomerId(customerId).map {
+            val hotel = hotelRepository.findByRoomId(it.roomId)
+            it.toDomain(hotel)
+        }
     }
 
     override suspend fun findById(bookingId: Int): Booking? {

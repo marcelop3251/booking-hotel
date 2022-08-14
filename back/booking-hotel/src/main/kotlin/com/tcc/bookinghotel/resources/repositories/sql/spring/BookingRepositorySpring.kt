@@ -1,6 +1,7 @@
 package com.tcc.bookinghotel.resources.repositories.sql.spring
 
 import com.tcc.bookinghotel.resources.repositories.entities.BookingEntity
+import java.time.LocalDate
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.r2dbc.repository.Modifying
 import org.springframework.data.r2dbc.repository.Query
@@ -10,7 +11,10 @@ import org.springframework.stereotype.Repository
 @Repository
 interface BookingRepositorySpring : CoroutineCrudRepository<BookingEntity, Int> {
 
-    suspend fun countByRoomIdAndStatusIn(id: Int, status: List<String>): Int
+    @Query("select count(*) from booking where  (((start_date <= :startDate and end_date >= :startDate) or (start_date <= :endDate and end_date >= :endDate)) \n" +
+            "or ((start_date >= :startDate and start_date <= :endDate) or (end_date  >= :startDate and end_date <= :endDate)))" +
+            "and room_id = :id and status in (:status)")
+    suspend fun countByRoomIdAndStatusInAndDate(id: Int, status: List<String>, startDate: LocalDate, endDate: LocalDate): Int
     suspend fun findAllByCustomerId(customerId: Int): Flow<BookingEntity>
     suspend fun findByCustomerIdAndStatus(customerId: Int, status: String): Flow<BookingEntity>
     @Query(value = "select b.* from booking b inner join room r on b.room_id = r.id " +

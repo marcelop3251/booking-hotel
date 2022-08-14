@@ -95,6 +95,12 @@ class HotelHandler(
         return ServerResponse.ok().bodyAndAwait(findAllBooking.execute(customerId))
     }
 
+    suspend fun findAllBookingStatus(request: ServerRequest): ServerResponse {
+        val customerId = request.headers().firstHeader("x-customer-id")!!.toInt()
+        val status = StatusBooking.valueOf(request.pathVariable("status"))
+        return ServerResponse.ok().bodyAndAwait(findAllBooking.execute(customerId, status))
+    }
+
     suspend fun findAllBookingApproved(request: ServerRequest): ServerResponse {
         val customerId = request.headers().firstHeader("x-customer-id")!!.toInt()
         return ServerResponse.ok().bodyAndAwait(findBookingPendingCheckIn.execute(customerId))
@@ -110,10 +116,11 @@ class HotelHandler(
         return ServerResponse.ok().bodyAndAwait(findAllServices.execute(ServiceType.valueOf(pathVariable)))
     }
 
-    suspend fun findAllRequestServices(request: ServerRequest): ServerResponse {
+    suspend fun findAllRequestByType(request: ServerRequest): ServerResponse {
         val customerId = request.headers().firstHeader("x-customer-id")!!
+        val serviceType = ServiceType.valueOf(request.pathVariable("type"))
         return ServerResponse.ok()
-            .bodyAndAwait(findAllRequestServices.execute(customerId.toInt()))
+            .bodyAndAwait(findAllRequestServices.execute(customerId.toInt(), serviceType))
     }
 
     suspend fun createRequestService(request: ServerRequest): ServerResponse {

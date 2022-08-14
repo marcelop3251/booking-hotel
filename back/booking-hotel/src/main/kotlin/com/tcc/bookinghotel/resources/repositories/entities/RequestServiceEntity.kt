@@ -3,13 +3,16 @@ package com.tcc.bookinghotel.resources.repositories.entities
 import com.tcc.bookinghotel.domain.entity.Booking
 import com.tcc.bookinghotel.domain.entity.RequestService
 import com.tcc.bookinghotel.domain.entity.Service
+import java.time.LocalDate
 import java.time.LocalDateTime
+import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 
 @Table("request_service")
-class RequestServiceEntity(
+data class RequestServiceEntity(
+    @Id
     var id: Int? = null,
-    val createdAt: LocalDateTime,
+    val createdAt: LocalDate,
     val bookingId: Int,
     val serviceId: Int
 ) {

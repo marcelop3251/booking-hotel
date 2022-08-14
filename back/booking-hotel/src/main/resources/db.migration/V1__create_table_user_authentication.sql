@@ -68,7 +68,7 @@ create table service(
 
 create table request_service(
     id serial PRIMARY KEY,
-    createdAt DATE NOT NULL,
+    created_at DATE NOT NULL,
     booking_id SMALLINT REFERENCES booking(id),
-    service SMALLINT REFERENCES service(id)
+    service_id SMALLINT REFERENCES service(id)
 );

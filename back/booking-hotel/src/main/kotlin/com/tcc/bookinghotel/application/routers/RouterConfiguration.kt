@@ -35,15 +35,17 @@ class RouterConfiguration(
         "/hotel".nest {
             POST("/booking", hotelHandler::booking)
             GET("/booking", hotelHandler::findAllBooking)
+            GET("/booking/{status}", hotelHandler::findAllBookingStatus)
             GET("/check-in", hotelHandler::findAllBookingApproved)
             POST("/check-in/{id}", hotelHandler::doCheckin)
             GET("/check-out", hotelHandler::findAllBookingFinalized)
             POST("/check-out/{id}", hotelHandler::doCheckOut)
             GET("/services/{type}", hotelHandler::findAllServices)
-            GET("/request", hotelHandler::findAllRequestServices)
+            GET("/request/{type}", hotelHandler::findAllRequestByType)
             POST("/request", hotelHandler::createRequestService)
             POST("/{company_id}", hotelHandler::registerHotel)
             GET("", hotelHandler::findAll)
+            onError<Exception> { exception, request -> exceptionHandler.handler(exception, request) }
         }
     }
 
@@ -57,6 +59,7 @@ class RouterConfiguration(
             GET("/booking/{status}", bookingHandler::getAllByStatus)
             POST("/booking/check-in/{id}", bookingHandler::doCheckin)
             POST("/booking/check-out/{id}", bookingHandler::doCheckOut)
+            onError<Exception> { exception, request -> exceptionHandler.handler(exception, request) }
         }
     }
 }
