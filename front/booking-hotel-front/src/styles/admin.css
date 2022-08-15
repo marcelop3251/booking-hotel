@@ -1,0 +1,9 @@
+.width-280 { 
+    width: 280px;
+    height: 1000px;
+    position: fixed;
+}
+
+.container-admin { 
+    padding-top: 100px;
+}

@@ -29,4 +29,28 @@ export class HotelService {
     static doCheck(checkType) { 
         return HTTP.post("/hotel/"+checkType);
     }
+
+    static getHotelAdmin() { 
+        return HTTP.get("/admin/hotel");
+    }
+
+    static registerNewHotel(newHotel) { 
+        return HTTP.post("/admin/hotel", newHotel)
+    }
+
+    static registerNewRoom(newRoom, hotel_id) { 
+        return HTTP.post("/admin/hotel/room/" + hotel_id, newRoom)
+    }
+
+    static registerNewService(newService) { 
+        return HTTP.post("/admin/service", newService)
+    }
+
+    static getAllBookingAdmin(checkType) { 
+        return HTTP.get("/admin/booking/"+checkType)
+    }
+
+    static approveCheck(checkType, bookingId) { 
+        return HTTP.post("/admin/booking/"+ checkType + "/" + bookingId)
+    }
 }

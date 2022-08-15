@@ -12,4 +12,15 @@ export class RegisterService {
         })
     }
 
+    static doRegisterAdmin(credential) { 
+
+        return axios.post(WITH_BASE_URL('company'),
+        { 
+            "email": credential.email,
+            "password": credential.password,
+            "name": credential.name,
+            "cnpj": credential.cnpj
+        })
+    }
+
 }

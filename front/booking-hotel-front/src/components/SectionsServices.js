@@ -76,7 +76,6 @@ export const SectionsServices = ({ propes, booking, serviceType }) => {
                             </div>
                             <div class="card-body">
                                 <h1 class="card-title pricing-card-title">R$ {element.service.price}<small class="text-muted fw-light"></small></h1>
-                                <button type="button" class="w-100 btn btn-lg btn-outline-dark" >Solicitado</button>
                             </div>
                         </div>
                     </div>

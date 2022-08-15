@@ -4,6 +4,7 @@ import './index.css';
 import './styles/login.css'
 import './styles/details.css'
 import './styles/not-found.css'
+import './styles/admin.css'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';

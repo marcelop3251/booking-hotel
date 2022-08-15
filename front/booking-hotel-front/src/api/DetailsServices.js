@@ -9,6 +9,6 @@ export class DetailsService {
     }
 
     static getDetaislByRoom(roomId) { 
-        return HTTP.get(`room/${roomId}`);
+        return HTTP.get(`/hotel/room/${roomId}`);
     }
 }
