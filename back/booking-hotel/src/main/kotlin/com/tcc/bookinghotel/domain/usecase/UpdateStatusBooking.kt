@@ -17,6 +17,11 @@ class UpdateStatusBooking(
                     bookingRepository.updateStatusCheckingById(statusBooking, bookingId)
                 }
             }
+            StatusBooking.CHECK_OUT -> {
+                if (booking?.status == StatusBooking.CHECK_IN_APPROVED) {
+                    bookingRepository.updateStatusCheckingById(statusBooking, bookingId)
+                }
+            }
             StatusBooking.CHECK_IN_APPROVED -> {
                 if (booking?.status == StatusBooking.CHECK_IN) {
                     bookingRepository.updateStatusCheckingById(statusBooking, bookingId)

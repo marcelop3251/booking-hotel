@@ -1,15 +1,19 @@
 package com.tcc.bookinghotel.resources.service
 
 import com.tcc.bookinghotel.resources.repositories.entities.CredentialEntity
+import com.tcc.bookinghotel.resources.repositories.entities.RolesEntity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 class UserDetailsService(
-    private val credential: CredentialEntity?
+    private val credential: CredentialEntity?,
+    private val rolesEntity: List<RolesEntity>
 ) : UserDetails  {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return mutableListOf();
+        return rolesEntity.toMutableList()
     }
 
     override fun getPassword(): String? {

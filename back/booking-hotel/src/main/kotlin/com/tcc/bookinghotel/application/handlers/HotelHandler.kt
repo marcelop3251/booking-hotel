@@ -31,13 +31,11 @@ import org.springframework.web.reactive.function.server.bodyAndAwait
 import org.springframework.web.reactive.function.server.bodyValueAndAwait
 import org.springframework.web.reactive.function.server.buildAndAwait
 
-private const val COMPANY_ID_PATH_VARIABLE = "company_id"
-
 @Component
 class HotelHandler(
     val registerNewHotel: RegisterNewHotel,
     val registerRoom: RegisterNewRoom,
-    val findAlHotel: FindAllHotel,
+    val findAllHotel: FindAllHotel,
     val findHotelByRoomId: FindHoteByRoomId,
     val bookingHotel: BookingHotel,
     val findAllBooking: FindAllBooking,
@@ -53,8 +51,8 @@ class HotelHandler(
 
     suspend fun registerHotel(request: ServerRequest): ServerResponse {
         log.info("Start request to register hotel")
-        val companyId = request.pathVariable(COMPANY_ID_PATH_VARIABLE)
-        val hotel = registerNewHotel.execute(request.awaitBody<RegisterHotelRequest>().toDomain(), companyId.toInt())
+        val userBackoffice = request.headers().firstHeader("x-customer-id")!!.toInt()
+        val hotel = registerNewHotel.execute(request.awaitBody<RegisterHotelRequest>().toDomain(), userBackoffice)
         return ServerResponse.ok().bodyValueAndAwait(RegisterHotelResponse(hotel)).also {
             log.info("Finished request to register hotel with success")
         }
@@ -69,8 +67,15 @@ class HotelHandler(
 
     suspend fun findAll(request: ServerRequest): ServerResponse {
         log.info("Start find all hotel")
-        //val companyId = request.pathVariable(COMPANY_ID_PATH_VARIABLE)
-        return ServerResponse.ok().bodyAndAwait(findAlHotel.execute()).also {
+        return ServerResponse.ok().bodyAndAwait(findAllHotel.execute()).also {
+            log.info("Finish find all hotel")
+        }
+    }
+
+    suspend fun findUserBackoffice(request: ServerRequest): ServerResponse {
+        log.info("Start find all hotel")
+        val userBackoffice = request.headers().firstHeader("x-customer-id")!!.toInt()
+        return ServerResponse.ok().bodyAndAwait(findAllHotel.execute(userBackoffice)).also {
             log.info("Finish find all hotel")
         }
     }

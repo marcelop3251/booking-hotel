@@ -42,3 +42,4 @@ curl --location --request GET 'http://localhost:8080/hotel/services/HOSPITALITY'
 --header 'Authorization: Bearer token' \
 --header 'Content-Type: application/json'
 
+Realizar a solicitação de um serviço.

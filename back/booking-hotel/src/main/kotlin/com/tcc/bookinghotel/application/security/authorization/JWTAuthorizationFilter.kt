@@ -1,6 +1,7 @@
 package com.tcc.bookinghotel.application.security.authorization
 
 import com.tcc.bookinghotel.application.security.TokenService
+import com.tcc.bookinghotel.resources.repositories.entities.RolesEntity
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -28,7 +29,8 @@ class JWTAuthorizationFilter(
 
         try {
             val token = tokenService.decodeAccessToken(authHeader)
-            val auth = UsernamePasswordAuthenticationToken(token.subject, null, token["role"] as Collection<GrantedAuthority>)
+            val role = token["role"] as ArrayList<String>
+            val auth = UsernamePasswordAuthenticationToken(token.subject, null, role.map { RolesEntity(null, it, token.subject.toInt())} )
             return chain.filter(exchange).contextWrite(ReactiveSecurityContextHolder.withAuthentication(auth))
         } catch (e: Exception) {
             logger.error("JWT exception", e)

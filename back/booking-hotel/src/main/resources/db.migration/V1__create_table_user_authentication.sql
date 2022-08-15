@@ -72,3 +72,9 @@ create table request_service(
     booking_id SMALLINT REFERENCES booking(id),
     service_id SMALLINT REFERENCES service(id)
 );
+
+create table granted_authority(
+    id serial PRIMARY KEY,
+    role VARCHAR(100),
+    credential_id SMALLINT REFERENCES credential(id)
+);

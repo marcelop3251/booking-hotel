@@ -11,8 +11,8 @@ class RegisterNewHotel(
     val hotelRepository: HotelRepository
 )  {
 
-    suspend fun execute(hotel: Hotel, companyId: Int): Hotel =
+    suspend fun execute(hotel: Hotel, userBackofficeId: Int): Hotel =
         hotelRepository.findByCNPJ(hotel.cnpj)?.let {
             throw HotelRegistryException(TypeException.HOTEL_ALREADY_REGISTRED, HOTEL_ALREADY_MESSAGE)
-        } ?: hotelRepository.create(hotel, companyId)
+        } ?: hotelRepository.create(hotel, userBackofficeId)
 }

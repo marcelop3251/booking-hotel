@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface CompanyRepositorySpring : CoroutineCrudRepository<CompanyEntity, Int> {
 
-    suspend fun findByCredentialId(email: Int): CompanyEntity?
+    suspend fun findByCredentialId(userBackoffice: Int): CompanyEntity?
 }

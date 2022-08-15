@@ -7,6 +7,7 @@ import com.tcc.bookinghotel.domain.repository.HotelRepository
 import com.tcc.bookinghotel.resources.repositories.entities.HotelEntity
 import com.tcc.bookinghotel.resources.repositories.entities.OrganizationEntity
 import com.tcc.bookinghotel.resources.repositories.entities.RoomEntity
+import com.tcc.bookinghotel.resources.repositories.sql.spring.CompanyRepositorySpring
 import com.tcc.bookinghotel.resources.repositories.sql.spring.HotelRepositorySpring
 import com.tcc.bookinghotel.resources.repositories.sql.spring.OrganizationRepositorySpring
 import com.tcc.bookinghotel.resources.repositories.sql.spring.RoomRepositorySpring
@@ -32,6 +33,7 @@ class HotelRepositoryImpl(
     private val hotelRepositorySpring: HotelRepositorySpring,
     private val organizationRepositorySpring: OrganizationRepositorySpring,
     private val roomRepositorySpring: RoomRepositorySpring,
+    private val companyRepositorySpring: CompanyRepositorySpring
 ) : HotelRepository {
 
     val log: Logger = LoggerFactory.getLogger(javaClass)
@@ -46,12 +48,15 @@ class HotelRepositoryImpl(
 
 
     @Transactional
-    override suspend fun create(hotel: Hotel, companyId: Int): Hotel =
-        organizationRepositorySpring.save(OrganizationEntity(hotel)).let {
-            hotelRepositorySpring.save(HotelEntity(hotel, it.id!!, companyId)).toDomain(it)
-        }.also {
-            log.info("Hotel create with success {}", it)
+    override suspend fun create(hotel: Hotel, userBackofficeId: Int): Hotel =
+        companyRepositorySpring.findByCredentialId(userBackofficeId).let { company ->
+            organizationRepositorySpring.save(OrganizationEntity(hotel)).let {
+                hotelRepositorySpring.save(HotelEntity(hotel, it.id!!, company!!.id!!)).toDomain(it)
+            }.also {
+                log.info("Hotel create with success {}", it)
+            }
         }
+
 
     override suspend fun findById(hotelId: Int): Hotel? {
         return hotelRepositorySpring.findById(hotelId)?.let {
@@ -61,11 +66,20 @@ class HotelRepositoryImpl(
         }
     }
 
+    override suspend fun findAllByUserBackoffice(userBackofficeId: Int): Flow<Hotel> {
+        val company = companyRepositorySpring.findByCredentialId(userBackofficeId)
+        return hotelRepositorySpring.findAllByCompanyId(company!!.id!!).map {
+            val roomEntity = roomRepositorySpring.findByHotelId(it.id!!).toList()
+            val organization = organizationRepositorySpring.findById(it.organizationId)
+            it.toDomain(organization!!, roomEntity)
+        }
+    }
+
     override suspend fun findAll(): Flow<Hotel> {
         return hotelRepositorySpring.findAll().map {
             val organizationEntity = organizationRepositorySpring.findById(it.organizationId)
             val roomEntity = roomRepositorySpring.findByHotelId(it.id!!).toList()
-            it.toDomain(organizationEntity!!, roomEntity.toList())
+            it.toDomain(organizationEntity!!, roomEntity)
         }
     }
 

@@ -11,6 +11,11 @@ class FindAllHotel(
 
     val log = LoggerFactory.getLogger(javaClass)
 
+    suspend fun execute(userBackofficeId: Int): Flow<Hotel> {
+        log.info("Execute usecase findAllHotel By user backoffice")
+        return hotelRepository.findAllByUserBackoffice(userBackofficeId)
+    }
+
     suspend fun execute(): Flow<Hotel> {
         log.info("Execute usecase findAllHotel")
         return hotelRepository.findAll()

@@ -29,10 +29,8 @@ class RouterConfiguration(
     fun HotelRoutes(
         hotelHandler: HotelHandler
     ) = coRouter {
-        POST("/room/{hotel_id}", hotelHandler::registerRoom)
-        GET("/room/{room_id}", hotelHandler::findByRoomId)
-
         "/hotel".nest {
+            GET("/room/{room_id}", hotelHandler::findByRoomId)
             POST("/booking", hotelHandler::booking)
             GET("/booking", hotelHandler::findAllBooking)
             GET("/booking/{status}", hotelHandler::findAllBookingStatus)
@@ -43,7 +41,6 @@ class RouterConfiguration(
             GET("/services/{type}", hotelHandler::findAllServices)
             GET("/request/{type}", hotelHandler::findAllRequestByType)
             POST("/request", hotelHandler::createRequestService)
-            POST("/{company_id}", hotelHandler::registerHotel)
             GET("", hotelHandler::findAll)
             onError<Exception> { exception, request -> exceptionHandler.handler(exception, request) }
         }
@@ -53,12 +50,16 @@ class RouterConfiguration(
     fun servicesHoutes(
         serviceHandler: ServiceHandler,
         bookingHandler: BookingHandler,
+        hotelHandler: HotelHandler
     ) = coRouter {
         "/admin".nest {
             POST("/service", serviceHandler::createService)
             GET("/booking/{status}", bookingHandler::getAllByStatus)
             POST("/booking/check-in/{id}", bookingHandler::doCheckin)
             POST("/booking/check-out/{id}", bookingHandler::doCheckOut)
+            GET("/hotel", hotelHandler::findUserBackoffice)
+            POST("/hotel", hotelHandler::registerHotel)
+            POST("/hotel/room/{hotel_id}", hotelHandler::registerRoom)
             onError<Exception> { exception, request -> exceptionHandler.handler(exception, request) }
         }
     }
