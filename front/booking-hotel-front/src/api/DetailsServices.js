@@ -5,7 +5,7 @@ import HTTP from "./InterceptorAxios";
 export class DetailsService { 
 
     static getDetails() { 
-        return HTTP.get('hotel');
+        return HTTP.get('hotel'); 
     }
 
     static getDetaislByRoom(roomId) { 

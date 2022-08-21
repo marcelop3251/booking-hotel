@@ -19,7 +19,8 @@ export class RegisterService {
             "email": credential.email,
             "password": credential.password,
             "name": credential.name,
-            "cnpj": credential.cnpj
+            "cnpj": credential.cnpj,
+            "city": credential.city,
         })
     }
 

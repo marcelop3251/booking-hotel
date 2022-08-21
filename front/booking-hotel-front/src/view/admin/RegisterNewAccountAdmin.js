@@ -33,6 +33,10 @@ export const RegisterNewAccountAdmin = () => {
     const setCnpj = (e) => { 
         credential.cnpj = e.target.value;
     }
+
+    const setCity = (e) => { 
+        credential.city = e.target.value;
+    }
     
     return (
         <div class="d-flex align-items-center justify-content-center center-height">
@@ -98,6 +102,22 @@ export const RegisterNewAccountAdmin = () => {
                             type="text"
                             class="form-control"
                             onChange={(e) => setCnpj(e)}
+                        />
+                    </div>
+                    <div class="mb-2 me-sm-2 mb-sm-0">
+                        <label
+                            class="me-sm-2"
+                            for="examplePassword"
+                        >
+                            Cidade
+                        </label>
+                        <input
+                            id="city"
+                            name="city"
+                            placeholder="type the city"
+                            type="text"
+                            class="form-control"
+                            onChange={(e) => setCity(e)}
                         />
                     </div>
                     <div class="container-button">

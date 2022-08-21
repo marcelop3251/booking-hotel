@@ -7,7 +7,7 @@ export class LoginService {
 
         const config = { 
             headers: { 
-                'Access-Control-Allow-Origin': 'http://localhost:3000',
+                'Access-Control-Allow-Origin': 'http://34.148.248.225:4000',
                 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
             }
         }
